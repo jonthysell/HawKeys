@@ -17,17 +17,18 @@ TODO: Insert instructions for installing unicode AutoHotKey
 With HawKeys running, you can insert the special characters by holding the right-alt key and pressing either the apostrophe (for the ʻokina) or the target vowel (to add a kahakō to that vowel).
 
 | Hot Key | Inserts |
-| RAlt + ' | ʻ |
-| RAlt + a | ā |
-| RAlt + Shift + a | Ā |
-| RAlt + e | ē |
-| RAlt + Shift + e | Ē |
-| RAlt + i | ī |
-| RAlt + Shift + i | Ī |
-| RAlt + o | ō |
-| RAlt + Shift + o | Ō |
-| RAlt + u | ū |
-| RAlt + Shift + u | Ū |
+|:-|:-|
+| Right-Alt + ' | ʻ |
+| Right-Alt + a | ā |
+| Right-Alt + Shift + a | Ā |
+| Right-Alt + e | ē |
+| Right-Alt + Shift + e | Ē |
+| Right-Alt + i | ī |
+| Right-Alt + Shift + i | Ī |
+| Right-Alt + o | ō |
+| Right-Alt + Shift + o | Ō |
+| Right-Alt + u | ū |
+| Right-Alt + Shift + u | Ū |
 
 ## Errata ##
 
