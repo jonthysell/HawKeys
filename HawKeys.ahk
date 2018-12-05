@@ -26,22 +26,22 @@
 
 ; Insert ʻOkina
 
->!'::Send ʻ
->!+'::Send ʻ
+!'::Send ʻ
+!+'::Send ʻ
 
 ; Insert Kahakō
 
->!a::Send ā
->!+a::Send Ā
+!a::Send ā
+!+a::Send Ā
 
->!e::Send ē
->!+e::Send Ē
+!e::Send ē
+!+e::Send Ē
 
->!i::Send ī
->!+i::Send Ī
+!i::Send ī
+!+i::Send Ī
 
->!o::Send ō
->!+o::Send Ō
+!o::Send ō
+!+o::Send Ō
 
->!u::Send ū
->!+u::Send Ū
+!u::Send ū
+!+u::Send Ū
