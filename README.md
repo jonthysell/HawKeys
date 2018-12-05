@@ -8,8 +8,9 @@ HawKeys works on Windows XP SP3 and later.
 
 *Option 1: HawKeys Standalone (Recommended):*
 
-1. Download the latest HawKeys.exe file from https://github.com/jonthysell/HawKeys/releases/latest
-2. Double-click HawKeys.exe
+1. Download the latest HawKeys.zip file from https://github.com/jonthysell/HawKeys/releases/latest
+2. Extract the zip file
+3. Double-click HawKeys.exe
 
 You should now see HawKeys running in your system tray.
 
