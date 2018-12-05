@@ -8,7 +8,7 @@ HawKeys works on Windows XP SP3 and later.
 
 *Option 1: HawKeys Standalone (Recommended):*
 
-1. Download the latest HawKeys.zip file from https://github.com/jonthysell/HawKeys/releases/latest
+1. Download the latest HawKeysBinaries zip file from https://github.com/jonthysell/HawKeys/releases/latest
 2. Extract the zip file
 3. Double-click HawKeys.exe
 
@@ -18,7 +18,7 @@ You should now see HawKeys running in your system tray.
 
 1. Download the AutoHotKey Installer from https://www.autohotkey.com/download/
 2. Run the installer, and be sure to install the Unicode (not ANSI) version
-3. Download the latest HawKeys.ahk file from https://github.com/jonthysell/HawKeys/releases/latest
+3. Download the latest HawKeys ahk file from https://github.com/jonthysell/HawKeys/releases/latest
 4. Double-click HawKeys.ahk 
 
 You should now see AutoHotKey running the HawKeys script in your system tray.
