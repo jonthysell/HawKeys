@@ -24,13 +24,10 @@
 ; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 ; THE SOFTWARE.
 
-; Insert ʻOkina
-
 !'::Send ʻ
 !+'::Send ʻ
 
-; Insert Kahakō
-
+#If GetKeyState("CapsLock", "T") = 0
 !a::Send ā
 !+a::Send Ā
 
@@ -45,3 +42,21 @@
 
 !u::Send ū
 !+u::Send Ū
+#If
+
+#If GetKeyState("CapsLock", "T") = 1
+!a::Send Ā
+!+a::Send ā
+
+!e::Send Ē
+!+e::Send ē
+
+!i::Send Ī
+!+i::Send ī
+
+!o::Send Ō
+!+o::Send ō
+
+!u::Send Ū
+!+u::Send ū
+#If
