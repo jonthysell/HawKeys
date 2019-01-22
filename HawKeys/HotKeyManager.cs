@@ -28,6 +28,8 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace HawKeys
 {
@@ -37,9 +39,14 @@ namespace HawKeys
         private Dictionary<Keys, HotKeyEntry> _keysMap = new Dictionary<Keys, HotKeyEntry>();
         private Dictionary<int, HotKeyEntry> _idMap = new Dictionary<int, HotKeyEntry>();
 
+        private Queue<string> _outputBuffer = new Queue<string>();
+        private Task _outputTask = null;
+        private CancellationTokenSource _outputCTS = null;
+
         public HotKeyManager()
         {
             CreateHandle(new CreateParams());
+            StartOutput();
         }
 
         public void RegisterHotKey(Keys modifiers, Keys key, string outputCapsOff, string outputCapsOn)
@@ -83,17 +90,72 @@ namespace HawKeys
 
                 if (_idMap.TryGetValue(id, out HotKeyEntry entry))
                 {
-                    string output = Control.IsKeyLocked(Keys.CapsLock) ? entry.OutputCapsOn : entry.OutputCapsOff;
-
-                    MessageBox.Show(output);
+                    lock (_outputBuffer)
+                    {
+                        string output = Control.IsKeyLocked(Keys.CapsLock) ? entry.OutputCapsOn : entry.OutputCapsOff;
+                        _outputBuffer.Enqueue(output);
+                    }
                 }
             }
 
             base.WndProc(ref m);
         }
 
+        private void StartOutput()
+        {
+            _outputCTS = new CancellationTokenSource();
+            _outputTask = Task.Factory.StartNew(() =>
+            {
+                while (!_outputCTS.IsCancellationRequested)
+                {
+                    lock (_outputBuffer)
+                    {
+                        if (_outputBuffer.Count > 0 && Control.ModifierKeys == Keys.None)
+                        {
+                            SendString(_outputBuffer.Dequeue());
+                        }
+                    }
+                    Thread.Sleep(50);
+                }
+            });
+        }
+
+        // Adapted from https://stackoverflow.com/a/8885228/1653267
+        private void SendString(string s)
+        {
+            List<NativeMethods.INPUT> inputs = new List<NativeMethods.INPUT>();
+
+            foreach (char c in s)
+            {
+                foreach (bool keyUp in new bool[] { false, true })
+                {
+                    NativeMethods.INPUT input = new NativeMethods.INPUT
+                    {
+                        type = NativeMethods.INPUT_KEYBOARD,
+                        u = new NativeMethods.InputUnion
+                        {
+                            ki = new NativeMethods.KEYBDINPUT
+                            {
+                                wVk = 0,
+                                wScan = c,
+                                dwFlags = NativeMethods.KEYEVENTF_UNICODE | (keyUp ? NativeMethods.KEYEVENTF_KEYUP : 0),
+                                dwExtraInfo = NativeMethods.GetMessageExtraInfo(),
+                            }
+                        }
+                    };
+
+                    inputs.Add(input);
+                }
+            }
+
+            NativeMethods.SendInput((uint)inputs.Count, inputs.ToArray(), Marshal.SizeOf(typeof(NativeMethods.INPUT)));
+        }
+
         public void Dispose()
         {
+            _outputCTS.Cancel();
+            _outputTask.Wait(_outputCTS.Token);
+
             for (int i = _idMap.Count - 1; i >= 0; i--)
             {
                 int id = ID_BASE + i;
@@ -131,5 +193,62 @@ namespace HawKeys
             Ctrl = 0x0002,
             Shift = 0x0004,
         }
+
+        // The following adapted from https://stackoverflow.com/a/8885228/1653267
+        public const int INPUT_KEYBOARD = 1;
+        public const uint KEYEVENTF_KEYUP = 0x0002;
+        public const uint KEYEVENTF_UNICODE = 0x0004;
+
+        public struct INPUT
+        {
+            public int type;
+            public InputUnion u;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct InputUnion
+        {
+            [FieldOffset(0)]
+            public MOUSEINPUT mi;
+            [FieldOffset(0)]
+            public KEYBDINPUT ki;
+            [FieldOffset(0)]
+            public HARDWAREINPUT hi;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MOUSEINPUT
+        {
+            public int dx;
+            public int dy;
+            public uint mouseData;
+            public uint dwFlags;
+            public uint time;
+            public IntPtr dwExtraInfo;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct KEYBDINPUT
+        {
+            public ushort wVk;
+            public ushort wScan;
+            public uint dwFlags;
+            public uint time;
+            public IntPtr dwExtraInfo;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct HARDWAREINPUT
+        {
+            public uint uMsg;
+            public ushort wParamL;
+            public ushort wParamH;
+        }
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetMessageExtraInfo();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
     }
 }
