@@ -25,8 +25,6 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -102,7 +100,6 @@ namespace HawKeys
         {
             ShowInTaskbar = false;
             notifyIcon.Visible = true;
-            notifyIcon.ShowBalloonTip(5000);
         }
 
         private void OnOpenWindow()
@@ -123,6 +120,16 @@ namespace HawKeys
         private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             OnOpenWindow();
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OnOpenWindow();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
