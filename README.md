@@ -1,12 +1,10 @@
 # HawKeys #
 
-HawKeys is an [AutoHotKey](https://autohotkey.com/) script to make it easy to insert the proper Unicode characters for the [ʻokina](http://www.olelo.hawaii.edu/olelo/puana/okina.php) and [kahakōs](http://www.olelo.hawaii.edu/olelo/puana/kahako.php) used in the Hawaiian language.
+HawKeys is a small application to make it easy to insert the proper Unicode characters for the [ʻokina](http://www.olelo.hawaii.edu/olelo/puana/okina.php) and [kahakōs](http://www.olelo.hawaii.edu/olelo/puana/kahako.php) used in the Hawaiian language.
 
-HawKeys works on Windows XP SP3 and later.
+HawKeys requires .NET 4.0 and shoud work on Windows XP SP3 and later.
 
 ## Installation ##
-
-*Option 1: HawKeys Standalone (Recommended):*
 
 1. Download the latest HawKeysBinaries zip file from https://github.com/jonthysell/HawKeys/releases/latest
 2. Extract the zip file
@@ -14,7 +12,9 @@ HawKeys works on Windows XP SP3 and later.
 
 You should now see HawKeys running in your system tray.
 
-*Option 2: Install AutoHotKey:*
+## AutoHotKey Alternative ##
+
+If you're familliar with the popular automation tool AutoHotKey, HawKeys is also provided as an ahk script.
 
 1. Download the AutoHotKey Installer from https://www.autohotkey.com/download/
 2. Run the installer, and be sure to install the Unicode (not ANSI) version
@@ -45,4 +45,4 @@ With HawKeys running, you now have access to the following hot keys:
 
 HawKeys is open-source under the MIT license.
 
-HawKeys Copyright (c) 2018 Jon Thysell
+HawKeys Copyright (c) 2018-2019 Jon Thysell
