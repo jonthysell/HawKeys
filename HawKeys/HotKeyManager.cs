@@ -170,8 +170,8 @@ namespace HawKeys
 
         private struct HotKeyEntry
         {
-            public Keys HotKey;
             public int ID;
+            public Keys HotKey;
             public string OutputCapsOff;
             public string OutputCapsOn;
         }

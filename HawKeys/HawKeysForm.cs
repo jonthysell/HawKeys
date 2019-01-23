@@ -25,6 +25,8 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -57,6 +59,7 @@ namespace HawKeys
             Text = ProgramName;
 
             InitHotKeys();
+            InitHelpText();
         }
 
         private void InitHotKeys()
@@ -82,11 +85,24 @@ namespace HawKeys
             HotKeyManager.RegisterHotKey(Keys.Alt | Keys.Shift, Keys.U, "Ū", "ū");
         }
 
+        private void InitHelpText()
+        {
+            mainLabel.Text = string.Join(Environment.NewLine,
+                ProgramName,
+                ProgramCopyright,
+                "",
+                "Press Alt + ' to insert the ʻokina.",
+                "Press Alt + vowel to add a kahakō.",
+                "",
+                "https://github.com/jonthysell/HawKeys"
+                );
+        }
+
         private void OnMinimizeWindow()
         {
             ShowInTaskbar = false;
             notifyIcon.Visible = true;
-            notifyIcon.ShowBalloonTip(3000);
+            notifyIcon.ShowBalloonTip(5000);
         }
 
         private void OnOpenWindow()
