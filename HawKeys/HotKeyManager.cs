@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -39,7 +40,7 @@ namespace HawKeys
         private Dictionary<Keys, HotKeyEntry> _keysMap = new Dictionary<Keys, HotKeyEntry>();
         private Dictionary<int, HotKeyEntry> _idMap = new Dictionary<int, HotKeyEntry>();
 
-        private Queue<string> _outputBuffer = new Queue<string>();
+        private ConcurrentQueue<HotKeyEntry> _outputBuffer = new ConcurrentQueue<HotKeyEntry>();
         private Task _outputTask = null;
         private CancellationTokenSource _outputCTS = null;
 
@@ -90,11 +91,7 @@ namespace HawKeys
 
                 if (_idMap.TryGetValue(id, out HotKeyEntry entry))
                 {
-                    lock (_outputBuffer)
-                    {
-                        string output = Control.IsKeyLocked(Keys.CapsLock) ? entry.OutputCapsOn : entry.OutputCapsOff;
-                        _outputBuffer.Enqueue(output);
-                    }
+                    _outputBuffer.Enqueue(entry);
                 }
             }
 
@@ -108,12 +105,9 @@ namespace HawKeys
             {
                 while (!_outputCTS.IsCancellationRequested)
                 {
-                    lock (_outputBuffer)
+                    if (_outputBuffer.TryDequeue(out HotKeyEntry hke))
                     {
-                        if (_outputBuffer.Count > 0 && Control.ModifierKeys == Keys.None)
-                        {
-                            SendString(_outputBuffer.Dequeue());
-                        }
+                        ExecuteHotKey(hke);
                     }
                     Thread.Sleep(50);
                 }
@@ -121,11 +115,17 @@ namespace HawKeys
         }
 
         // Adapted from https://stackoverflow.com/a/8885228/1653267
-        private void SendString(string s)
+        private void ExecuteHotKey(HotKeyEntry entry)
         {
+            Keys modiferKeys = Control.ModifierKeys;
+
+            string output = Control.IsKeyLocked(Keys.CapsLock) ? entry.OutputCapsOn : entry.OutputCapsOff;
+            
             List<NativeMethods.INPUT> inputs = new List<NativeMethods.INPUT>();
 
-            foreach (char c in s)
+            inputs.AddRange(PauseModifiers(modiferKeys, true));
+
+            foreach (char c in output)
             {
                 foreach (bool keyUp in new bool[] { false, true })
                 {
@@ -139,6 +139,7 @@ namespace HawKeys
                                 wVk = 0,
                                 wScan = c,
                                 dwFlags = NativeMethods.KEYEVENTF_UNICODE | (keyUp ? NativeMethods.KEYEVENTF_KEYUP : 0),
+                                time = 0,
                                 dwExtraInfo = NativeMethods.GetMessageExtraInfo(),
                             }
                         }
@@ -148,13 +149,64 @@ namespace HawKeys
                 }
             }
 
+            inputs.AddRange(PauseModifiers(modiferKeys, false));
+
             NativeMethods.SendInput((uint)inputs.Count, inputs.ToArray(), Marshal.SizeOf(typeof(NativeMethods.INPUT)));
+        }
+
+        private IEnumerable<NativeMethods.INPUT> PauseModifiers(Keys modifierKeys, bool keyUp)
+        {
+            if ((modifierKeys & Keys.Shift) == Keys.Shift)
+            {
+                yield return GetModifierInput(NativeMethods.VK_SHIFT, keyUp);
+            }
+
+            if ((modifierKeys & Keys.Control) == Keys.Control)
+            {
+                yield return GetModifierInput(NativeMethods.VK_CTRL, keyUp);
+            }
+
+            if ((modifierKeys & Keys.Alt) == Keys.Alt)
+            {
+                bool maskWithCtrl = ((modifierKeys & Keys.Control) != Keys.Control);
+
+                if (maskWithCtrl)
+                {
+                    yield return GetModifierInput(NativeMethods.VK_CTRL, false);
+                }
+
+                yield return GetModifierInput(NativeMethods.VK_ALT, keyUp);
+
+                if (maskWithCtrl)
+                {
+                    yield return GetModifierInput(NativeMethods.VK_CTRL, true);
+                }
+            }
+        }
+
+        private NativeMethods.INPUT GetModifierInput(ushort virtualKey, bool keyUp)
+        {
+            return new NativeMethods.INPUT
+            {
+                type = NativeMethods.INPUT_KEYBOARD,
+                u = new NativeMethods.InputUnion
+                {
+                    ki = new NativeMethods.KEYBDINPUT
+                    {
+                        wVk = virtualKey,
+                        wScan = 0,
+                        dwFlags = keyUp ? NativeMethods.KEYEVENTF_KEYUP : 0,
+                        time = 0,
+                        dwExtraInfo = NativeMethods.GetMessageExtraInfo(),
+                    }
+                }
+            };
         }
 
         public void Dispose()
         {
-            _outputCTS.Cancel();
-            _outputTask.Wait(_outputCTS.Token);
+            _outputCTS?.Cancel();
+            _outputTask?.Wait(_outputCTS.Token);
 
             for (int i = _idMap.Count - 1; i >= 0; i--)
             {
@@ -193,6 +245,17 @@ namespace HawKeys
             Ctrl = 0x0002,
             Shift = 0x0004,
         }
+
+        public const ushort VK_SHIFT = 0x10;
+        public const ushort VK_CTRL = 0x11;
+        public const ushort VK_ALT = 0x12;
+
+        public const ushort VK_LSHIFT = 0xA0;
+        public const ushort VK_RSHIFT = 0xA1;
+        public const ushort VK_LCONTROL = 0xA2;
+        public const ushort VK_RCONTROL = 0xA3;
+        public const ushort VK_LMENU = 0xA4;
+        public const ushort VK_RMENU = 0xA5;
 
         // The following adapted from https://stackoverflow.com/a/8885228/1653267
         public const int INPUT_KEYBOARD = 1;
