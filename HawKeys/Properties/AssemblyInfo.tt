@@ -2,7 +2,7 @@
 <#@ output extension=".cs" #>
 <#
     int major    = 1;
-    int minor    = 2; // Official == even, Preview == odd
+    int minor    = 1; // Official == even, Preview == odd
     int build    = 0;
     int revision = 0;
 

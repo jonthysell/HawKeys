@@ -25,12 +25,9 @@
 // THE SOFTWARE.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace HawKeys
 {
@@ -40,14 +37,9 @@ namespace HawKeys
         private Dictionary<Keys, HotKeyEntry> _keysMap = new Dictionary<Keys, HotKeyEntry>();
         private Dictionary<int, HotKeyEntry> _idMap = new Dictionary<int, HotKeyEntry>();
 
-        private ConcurrentQueue<HotKeyEntry> _outputBuffer = new ConcurrentQueue<HotKeyEntry>();
-        private Task _outputTask = null;
-        private CancellationTokenSource _outputCTS = null;
-
         public HotKeyManager()
         {
             CreateHandle(new CreateParams());
-            StartOutput();
         }
 
         public void RegisterHotKey(Keys modifiers, Keys key, string outputCapsOff, string outputCapsOn)
@@ -91,27 +83,11 @@ namespace HawKeys
 
                 if (_idMap.TryGetValue(id, out HotKeyEntry entry))
                 {
-                    _outputBuffer.Enqueue(entry);
+                    ExecuteHotKey(entry);
                 }
             }
 
             base.WndProc(ref m);
-        }
-
-        private void StartOutput()
-        {
-            _outputCTS = new CancellationTokenSource();
-            _outputTask = Task.Factory.StartNew(() =>
-            {
-                while (!_outputCTS.IsCancellationRequested)
-                {
-                    if (_outputBuffer.TryDequeue(out HotKeyEntry hke))
-                    {
-                        ExecuteHotKey(hke);
-                    }
-                    Thread.Sleep(50);
-                }
-            });
         }
 
         // Adapted from https://stackoverflow.com/a/8885228/1653267
@@ -205,9 +181,6 @@ namespace HawKeys
 
         public void Dispose()
         {
-            _outputCTS?.Cancel();
-            _outputTask?.Wait(_outputCTS.Token);
-
             for (int i = _idMap.Count - 1; i >= 0; i--)
             {
                 int id = ID_BASE + i;
