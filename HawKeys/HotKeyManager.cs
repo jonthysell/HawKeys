@@ -53,12 +53,12 @@ namespace HawKeys
 
             int id = ID_BASE + _idMap.Count;
 
-            NativeMethods.ModifierKeys nativeModifierKeys = NativeMethods.ModifierKeys.None;
-            nativeModifierKeys |= ((modifiers & Keys.Alt) == Keys.Alt) ? NativeMethods.ModifierKeys.Alt : NativeMethods.ModifierKeys.None;
-            nativeModifierKeys |= ((modifiers & Keys.Control) == Keys.Control) ? NativeMethods.ModifierKeys.Ctrl : NativeMethods.ModifierKeys.None;
-            nativeModifierKeys |= ((modifiers & Keys.Shift) == Keys.Shift) ? NativeMethods.ModifierKeys.Shift : NativeMethods.ModifierKeys.None;
+            NativeMethods.HotKeyModifier hotKeyModifiers = NativeMethods.HotKeyModifier.None;
+            hotKeyModifiers |= ((modifiers & Keys.Alt) == Keys.Alt) ? NativeMethods.HotKeyModifier.Alt : NativeMethods.HotKeyModifier.None;
+            hotKeyModifiers |= ((modifiers & Keys.Control) == Keys.Control) ? NativeMethods.HotKeyModifier.Control : NativeMethods.HotKeyModifier.None;
+            hotKeyModifiers |= ((modifiers & Keys.Shift) == Keys.Shift) ? NativeMethods.HotKeyModifier.Shift : NativeMethods.HotKeyModifier.None;
 
-            if (!NativeMethods.RegisterHotKey(Handle, id, (int)nativeModifierKeys, (int)key))
+            if (!NativeMethods.RegisterHotKey(Handle, id, (int)hotKeyModifiers, (int)key))
             {
                 throw new Exception("Unable to register the hotkey.");
             }
@@ -93,7 +93,7 @@ namespace HawKeys
         // Adapted from https://stackoverflow.com/a/8885228/1653267
         private void ExecuteHotKey(HotKeyEntry entry)
         {
-            Keys modiferKeys = Control.ModifierKeys;
+            ModifierKeys modiferKeys = GetModifierKeys();
 
             string output = Control.IsKeyLocked(Keys.CapsLock) ? entry.OutputCapsOn : entry.OutputCapsOff;
             
@@ -130,32 +130,47 @@ namespace HawKeys
             NativeMethods.SendInput((uint)inputs.Count, inputs.ToArray(), Marshal.SizeOf(typeof(NativeMethods.INPUT)));
         }
 
-        private IEnumerable<NativeMethods.INPUT> PauseModifiers(Keys modifierKeys, bool keyUp)
+        private ModifierKeys GetModifierKeys()
         {
-            if ((modifierKeys & Keys.Shift) == Keys.Shift)
+            ModifierKeys mk = ModifierKeys.None;
+
+            mk |= NativeMethods.GetKeyState(NativeMethods.VK_LCONTROL) < 0 ? ModifierKeys.LControl : ModifierKeys.None;
+            mk |= NativeMethods.GetKeyState(NativeMethods.VK_RCONTROL) < 0 ? ModifierKeys.RControl : ModifierKeys.None;
+            mk |= NativeMethods.GetKeyState(NativeMethods.VK_LSHIFT) < 0 ? ModifierKeys.LShift : ModifierKeys.None;
+            mk |= NativeMethods.GetKeyState(NativeMethods.VK_RSHIFT) < 0 ? ModifierKeys.RShift : ModifierKeys.None;
+            mk |= NativeMethods.GetKeyState(NativeMethods.VK_LMENU) < 0 ? ModifierKeys.LAlt : ModifierKeys.None;
+            mk |= NativeMethods.GetKeyState(NativeMethods.VK_RMENU) < 0 ? ModifierKeys.RAlt : ModifierKeys.None;
+
+            return mk;
+        }
+
+        private IEnumerable<NativeMethods.INPUT> PauseModifiers(ModifierKeys modifierKeys, bool keyUp)
+        {
+            if ((modifierKeys & ModifierKeys.LShift) == ModifierKeys.LShift)
             {
-                yield return GetModifierInput(NativeMethods.VK_SHIFT, keyUp);
+                yield return GetModifierInput(NativeMethods.VK_LSHIFT, keyUp);
             }
 
-            if ((modifierKeys & Keys.Control) == Keys.Control)
+            if ((modifierKeys & ModifierKeys.LControl) == ModifierKeys.LControl)
             {
-                yield return GetModifierInput(NativeMethods.VK_CTRL, keyUp);
+                yield return GetModifierInput(NativeMethods.VK_LCONTROL, keyUp);
             }
 
-            if ((modifierKeys & Keys.Alt) == Keys.Alt)
+            if ((modifierKeys & ModifierKeys.LAlt) == ModifierKeys.LAlt)
             {
-                bool maskWithCtrl = ((modifierKeys & Keys.Control) != Keys.Control);
+                // We need to mask alts with controls so that menus aren't activated
+                bool maskWithCtrl = ((modifierKeys & ModifierKeys.LControl) != ModifierKeys.LControl);
 
                 if (maskWithCtrl)
                 {
-                    yield return GetModifierInput(NativeMethods.VK_CTRL, false);
+                    yield return GetModifierInput(NativeMethods.VK_LCONTROL, false);
                 }
 
-                yield return GetModifierInput(NativeMethods.VK_ALT, keyUp);
+                yield return GetModifierInput(NativeMethods.VK_LMENU, keyUp);
 
                 if (maskWithCtrl)
                 {
-                    yield return GetModifierInput(NativeMethods.VK_CTRL, true);
+                    yield return GetModifierInput(NativeMethods.VK_LCONTROL, true);
                 }
             }
         }
@@ -200,6 +215,18 @@ namespace HawKeys
             public string OutputCapsOff;
             public string OutputCapsOn;
         }
+
+        [Flags]
+        private enum ModifierKeys
+        {
+            None     = 0x00,
+            LShift   = 0x01,
+            RShift   = 0x02,
+            LControl = 0x04,
+            RControl = 0x08,
+            LAlt     = 0x10,
+            RAlt     = 0x20,
+        }
     }
 
     internal partial class NativeMethods
@@ -211,24 +238,27 @@ namespace HawKeys
         public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         [Flags]
-        public enum ModifierKeys
+        public enum HotKeyModifier
         {
-            None = 0x0000,
-            Alt = 0x0001,
-            Ctrl = 0x0002,
-            Shift = 0x0004,
+            None    = 0x0,
+            Alt     = 0x1,
+            Control = 0x2,
+            Shift   = 0x4,
         }
 
-        public const ushort VK_SHIFT = 0x10;
-        public const ushort VK_CTRL = 0x11;
-        public const ushort VK_ALT = 0x12;
+        [DllImport("user32.dll")]
+        public static extern short GetKeyState(int nVirtKey);
 
-        public const ushort VK_LSHIFT = 0xA0;
-        public const ushort VK_RSHIFT = 0xA1;
+        public const ushort VK_SHIFT    = 0x10;
+        public const ushort VK_CTRL     = 0x11;
+        public const ushort VK_ALT      = 0x12;
+
+        public const ushort VK_LSHIFT   = 0xA0;
+        public const ushort VK_RSHIFT   = 0xA1;
         public const ushort VK_LCONTROL = 0xA2;
         public const ushort VK_RCONTROL = 0xA3;
-        public const ushort VK_LMENU = 0xA4;
-        public const ushort VK_RMENU = 0xA5;
+        public const ushort VK_LMENU    = 0xA4;
+        public const ushort VK_RMENU    = 0xA5;
 
         // The following adapted from https://stackoverflow.com/a/8885228/1653267
         public const int INPUT_KEYBOARD = 1;
