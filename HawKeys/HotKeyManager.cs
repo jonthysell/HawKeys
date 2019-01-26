@@ -146,6 +146,9 @@ namespace HawKeys
 
         private IEnumerable<NativeMethods.INPUT> PauseModifiers(ModifierKeys modifierKeys, bool keyUp)
         {
+            bool laltDown = (modifierKeys & ModifierKeys.LAlt) == ModifierKeys.LAlt;
+            bool raltDown = (modifierKeys & ModifierKeys.RAlt) == ModifierKeys.RAlt;
+
             if ((modifierKeys & ModifierKeys.LShift) == ModifierKeys.LShift)
             {
                 yield return GetModifierInput(NativeMethods.VK_LSHIFT, keyUp);
@@ -156,7 +159,7 @@ namespace HawKeys
                 yield return GetModifierInput(NativeMethods.VK_LCONTROL, keyUp);
             }
 
-            if ((modifierKeys & ModifierKeys.LAlt) == ModifierKeys.LAlt)
+            if (laltDown)
             {
                 // We need to mask alts with controls so that menus aren't activated
                 bool maskWithCtrl = ((modifierKeys & ModifierKeys.LControl) != ModifierKeys.LControl);
@@ -167,6 +170,24 @@ namespace HawKeys
                 }
 
                 yield return GetModifierInput(NativeMethods.VK_LMENU, keyUp);
+
+                if (maskWithCtrl)
+                {
+                    yield return GetModifierInput(NativeMethods.VK_LCONTROL, true);
+                }
+            }
+
+            if (raltDown)
+            {
+                // We need to mask alts with controls so that menus aren't activated
+                bool maskWithCtrl = ((modifierKeys & ModifierKeys.LControl) != ModifierKeys.LControl);
+
+                if (maskWithCtrl)
+                {
+                    yield return GetModifierInput(NativeMethods.VK_LCONTROL, false);
+                }
+
+                yield return GetModifierInput(NativeMethods.VK_RMENU, keyUp);
 
                 if (maskWithCtrl)
                 {
