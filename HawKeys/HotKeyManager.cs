@@ -149,9 +149,63 @@ namespace HawKeys
             bool laltDown = (modifierKeys & ModifierKeys.LAlt) == ModifierKeys.LAlt;
             bool raltDown = (modifierKeys & ModifierKeys.RAlt) == ModifierKeys.RAlt;
 
-            if ((modifierKeys & ModifierKeys.LShift) == ModifierKeys.LShift)
+            // We need to mask alts with controls so that menus aren't activated
+            bool maskWithCtrl = ((modifierKeys & (ModifierKeys.LControl | ModifierKeys.RControl)) == ModifierKeys.None);
+
+            if (laltDown)
             {
-                yield return GetModifierInput(NativeMethods.VK_LSHIFT, keyUp);
+                if (keyUp)
+                {
+                    if (maskWithCtrl)
+                    {
+                        yield return GetModifierInput(NativeMethods.VK_CONTROL, false);
+                        yield return GetModifierInput(NativeMethods.VK_CONTROL, true);
+                    }
+
+                    yield return GetModifierInput(NativeMethods.VK_LMENU, keyUp);
+                }
+                else
+                {
+                    if (maskWithCtrl)
+                    {
+                        yield return GetModifierInput(NativeMethods.VK_CONTROL, false);
+                    }
+
+                    yield return GetModifierInput(NativeMethods.VK_LMENU, keyUp);
+
+                    if (maskWithCtrl)
+                    {
+                        yield return GetModifierInput(NativeMethods.VK_CONTROL, true);
+                    }
+                }
+            }
+
+            if (raltDown)
+            {
+                if (keyUp)
+                {
+                    if (maskWithCtrl)
+                    {
+                        yield return GetModifierInput(NativeMethods.VK_CONTROL, false);
+                        yield return GetModifierInput(NativeMethods.VK_CONTROL, true);
+                    }
+
+                    yield return GetModifierInput(NativeMethods.VK_RMENU, keyUp);
+                }
+                else
+                {
+                    if (maskWithCtrl)
+                    {
+                        yield return GetModifierInput(NativeMethods.VK_CONTROL, false);
+                    }
+
+                    yield return GetModifierInput(NativeMethods.VK_RMENU, keyUp);
+
+                    if (maskWithCtrl)
+                    {
+                        yield return GetModifierInput(NativeMethods.VK_CONTROL, true);
+                    }
+                }
             }
 
             if ((modifierKeys & ModifierKeys.LControl) == ModifierKeys.LControl)
@@ -159,40 +213,19 @@ namespace HawKeys
                 yield return GetModifierInput(NativeMethods.VK_LCONTROL, keyUp);
             }
 
-            if (laltDown)
+            if ((modifierKeys & ModifierKeys.RControl) == ModifierKeys.RControl)
             {
-                // We need to mask alts with controls so that menus aren't activated
-                bool maskWithCtrl = ((modifierKeys & ModifierKeys.LControl) != ModifierKeys.LControl);
-
-                if (maskWithCtrl)
-                {
-                    yield return GetModifierInput(NativeMethods.VK_LCONTROL, false);
-                }
-
-                yield return GetModifierInput(NativeMethods.VK_LMENU, keyUp);
-
-                if (maskWithCtrl)
-                {
-                    yield return GetModifierInput(NativeMethods.VK_LCONTROL, true);
-                }
+                yield return GetModifierInput(NativeMethods.VK_RCONTROL, keyUp);
             }
 
-            if (raltDown)
+            if ((modifierKeys & ModifierKeys.LShift) == ModifierKeys.LShift)
             {
-                // We need to mask alts with controls so that menus aren't activated
-                bool maskWithCtrl = ((modifierKeys & ModifierKeys.LControl) != ModifierKeys.LControl);
+                yield return GetModifierInput(NativeMethods.VK_LSHIFT, keyUp);
+            }
 
-                if (maskWithCtrl)
-                {
-                    yield return GetModifierInput(NativeMethods.VK_LCONTROL, false);
-                }
-
-                yield return GetModifierInput(NativeMethods.VK_RMENU, keyUp);
-
-                if (maskWithCtrl)
-                {
-                    yield return GetModifierInput(NativeMethods.VK_LCONTROL, true);
-                }
+            if ((modifierKeys & ModifierKeys.RShift) == ModifierKeys.RShift)
+            {
+                yield return GetModifierInput(NativeMethods.VK_RSHIFT, keyUp);
             }
         }
 
@@ -271,9 +304,11 @@ namespace HawKeys
         public static extern short GetKeyState(int nVirtKey);
 
         public const ushort VK_SHIFT    = 0x10;
-        public const ushort VK_CTRL     = 0x11;
+        public const ushort VK_CONTROL  = 0x11;
         public const ushort VK_ALT      = 0x12;
 
+        public const ushort VK_LWIN     = 0x5B;
+        public const ushort VK_RWIN     = 0x5C;
         public const ushort VK_LSHIFT   = 0xA0;
         public const ushort VK_RSHIFT   = 0xA1;
         public const ushort VK_LCONTROL = 0xA2;
