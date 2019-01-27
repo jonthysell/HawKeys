@@ -85,7 +85,7 @@ namespace HawKeys
 
         private void InitHelpText()
         {
-            mainLabel.Text = string.Join(Environment.NewLine,
+            mainLabel.Text = string.Join(Environment.NewLine, new string[] {
                 ProgramName,
                 ProgramCopyright,
                 "",
@@ -93,7 +93,7 @@ namespace HawKeys
                 "Press Alt + vowel to add a kahakō.",
                 "",
                 "https://github.com/jonthysell/HawKeys"
-                );
+            });
         }
 
         private void OnMinimizeWindow()
