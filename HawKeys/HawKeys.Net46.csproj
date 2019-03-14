@@ -90,11 +90,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="HawKeys.ico" />
-    <Content Include="Properties\AssemblyInfo.tt">
+    <None Include="HawKeys.ico" />
+    <None Include="Properties\AssemblyInfo.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfo.cs</LastGenOutput>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
