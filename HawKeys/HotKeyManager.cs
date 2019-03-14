@@ -93,13 +93,13 @@ namespace HawKeys
         // Adapted from https://stackoverflow.com/a/8885228/1653267
         private void ExecuteHotKey(HotKeyEntry entry)
         {
-            ModifierKeys modiferKeys = GetModifierKeys();
+            ModifierKeys modifierKeys = GetModifierKeys();
 
             string output = Control.IsKeyLocked(Keys.CapsLock) ? entry.OutputCapsOn : entry.OutputCapsOff;
             
             List<NativeMethods.INPUT> inputs = new List<NativeMethods.INPUT>();
 
-            inputs.AddRange(PauseModifiers(modiferKeys, true));
+            inputs.AddRange(PauseModifiers(modifierKeys, true));
 
             foreach (char c in output)
             {
@@ -125,7 +125,7 @@ namespace HawKeys
                 }
             }
 
-            inputs.AddRange(PauseModifiers(modiferKeys, false));
+            inputs.AddRange(PauseModifiers(modifierKeys, false));
 
             NativeMethods.SendInput((uint)inputs.Count, inputs.ToArray(), Marshal.SizeOf(typeof(NativeMethods.INPUT)));
         }
@@ -199,7 +199,22 @@ namespace HawKeys
                         yield return GetModifierInput(NativeMethods.VK_CONTROL, false);
                     }
 
-                    yield return GetModifierInput(NativeMethods.VK_RMENU, keyUp);
+                    // To fix issues with the right-alt virtual key, we use the scan code instead
+                    yield return new NativeMethods.INPUT
+                    {
+                        type = NativeMethods.INPUT_KEYBOARD,
+                        u = new NativeMethods.InputUnion
+                        {
+                            ki = new NativeMethods.KEYBDINPUT
+                            {
+                                wVk = 0,
+                                wScan = NativeMethods.SCANCODE_RMENU,
+                                dwFlags = NativeMethods.KEYEVENTF_EXTENDEDKEY | NativeMethods.KEYEVENTF_SCANCODE,
+                                time = 0,
+                                dwExtraInfo = NativeMethods.GetMessageExtraInfo(),
+                            }
+                        }
+                    };
 
                     if (maskWithCtrl)
                     {
@@ -316,10 +331,14 @@ namespace HawKeys
         public const ushort VK_LMENU    = 0xA4;
         public const ushort VK_RMENU    = 0xA5;
 
+        public const ushort SCANCODE_RMENU = 0x38;
+
         // The following adapted from https://stackoverflow.com/a/8885228/1653267
         public const int INPUT_KEYBOARD = 1;
+        public const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
         public const uint KEYEVENTF_KEYUP = 0x0002;
         public const uint KEYEVENTF_UNICODE = 0x0004;
+        public const uint KEYEVENTF_SCANCODE = 0x0008;
 
         public struct INPUT
         {
