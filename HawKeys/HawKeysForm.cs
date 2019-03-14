@@ -37,7 +37,19 @@ namespace HawKeys
             get
             {
                 Version version = Assembly.GetExecutingAssembly().GetName().Version;
-                return string.Format("{0} v{1}", Assembly.GetExecutingAssembly().GetName().Name, (version.Build == 0 && version.Revision == 0) ? string.Format("{0}.{1}", version.Major, version.Minor) : Assembly.GetExecutingAssembly().GetName().Version.ToString());
+
+                string versionString = string.Format("{0}.{1}", version.Major, version.Minor);
+
+                if (version.Revision == 0 && version.Build > 0)
+                {
+                    versionString += string.Format(".{0}", version.Build);
+                }
+                else if (version.Revision > 0)
+                {
+                    versionString += string.Format(".{0}.{1}", version.Build, version.Revision);
+                }
+
+                return string.Format("{0} v{1}", Assembly.GetExecutingAssembly().GetName().Name, versionString);
             }
         }
 
