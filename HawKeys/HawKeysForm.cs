@@ -25,8 +25,11 @@
 // THE SOFTWARE.
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
+
+using Microsoft.Win32;
 
 namespace HawKeys
 {
@@ -61,15 +64,61 @@ namespace HawKeys
             }
         }
 
+        public string CopyrightUrl => "https://github.com/jonthysell/HawKeys";
+
+        public bool StartMinimized
+        {
+            get
+            {
+                try
+                {
+                    return Convert.ToBoolean(Settings.GetValue("StartMinimized", 0));
+                }
+                catch (Exception ex)
+                {
+                    HandleException(new Exception("Unable to load StartMinimized setting.", ex));
+                }
+
+                return false;
+            }
+            set
+            {
+                try
+                {
+                    Settings.SetValue("StartMinimized", value, RegistryValueKind.DWord);
+                }
+                catch (Exception ex)
+                {
+                    HandleException(new Exception("Unable to save StartMinimized setting.", ex));
+                }
+            }
+        }
+
+        public RegistryKey Settings
+        {
+            get
+            {
+                return (_settings = Registry.CurrentUser.OpenSubKey("Software", true).CreateSubKey("JonThysell").CreateSubKey("HawKeys"));
+            }
+        }
+        private RegistryKey _settings;
+
         public HotKeyManager HotKeyManager { get; private set; }
 
         public HawKeysForm()
         {
             InitializeComponent();
-            Text = ProgramName;
 
-            InitHotKeys();
-            InitHelpText();
+            try
+            {
+                InitHotKeys();
+                InitLabels();
+                InitSettings();
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
         }
 
         private void InitHotKeys()
@@ -95,17 +144,26 @@ namespace HawKeys
             HotKeyManager.RegisterHotKey(Keys.Alt | Keys.Shift, Keys.U, "Ū", "ū");
         }
 
-        private void InitHelpText()
+        private void InitLabels()
         {
-            mainLabel.Text = string.Join(Environment.NewLine, new string[] {
-                ProgramName,
-                ProgramCopyright,
-                "",
-                "Press Alt + ' to insert the ʻokina.",
-                "Press Alt + vowel to add a kahakō.",
-                "",
-                "https://github.com/jonthysell/HawKeys"
-            });
+            Text = ProgramName;
+            topLabel.Text = ProgramName;
+            copyrightLinkLabel.Text = ProgramCopyright;
+        }
+
+        private void InitSettings()
+        {
+            startMinimizedCheckBox.Checked = StartMinimized;
+        }
+
+        private void HandleException(Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private bool PromptForConfirmation(string prompt)
+        {
+            return MessageBox.Show(prompt, "HawKeys Prompt", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
         }
 
         private void OnMinimizeWindow()
@@ -121,27 +179,109 @@ namespace HawKeys
             notifyIcon.Visible = false;
         }
 
-        private void HawKeysForm_Resize(object sender, System.EventArgs e)
+        private void HawKeysForm_Resize(object sender, EventArgs e)
         {
-            if (WindowState == FormWindowState.Minimized)
+            try
             {
-                OnMinimizeWindow();
+                if (WindowState == FormWindowState.Minimized)
+                {
+                    OnMinimizeWindow();
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
             }
         }
 
         private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            OnOpenWindow();
+            try
+            {
+                OnOpenWindow();
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OnOpenWindow();
+            try
+            {
+                OnOpenWindow();
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Close();
+            try
+            {
+                Close();
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private void copyrightLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                if (PromptForConfirmation("This will open the HawKeys website in your browser. Do you want to continue?"))
+                {
+                    Process.Start(CopyrightUrl);
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private void startMinimizedCheckBox_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bool startMinimized = StartMinimized;
+
+                if (startMinimized || PromptForConfirmation("This will set HawKeys to start automatically minimized in the System Tray. Do you want to continue?"))
+                {
+                    // Toggling off OR confirmed toggling on
+                    startMinimizedCheckBox.Checked = (StartMinimized = !startMinimized);
+
+                    if (!startMinimized && PromptForConfirmation("Would you like to minimize HawKeys right now?"))
+                    {
+                        // Minimizing 
+                        WindowState = FormWindowState.Minimized;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private void HawKeysForm_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                if (StartMinimized)
+                {
+                    WindowState = FormWindowState.Minimized;
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
         }
     }
 }
