@@ -21,24 +21,13 @@ HawKeys is now available on the Microsoft Store.
 2. Extract the zip file
 3. Double-click HawKeys.exe
 
-You should now see HawKeys running. As long as the app is running, you'll have access to the new hotkeys throughout Windows. At any point you can minimize the app to your system tray if you prefer to have it run out of the way.
+You should now see the HawKeys window running.
 
-## AutoHotKey Users ##
+## Hotkey Usage ##
 
-If you're familliar with the popular automation tool AutoHotKey, HawKeys is also provided as an ahk script.
+With HawKeys running, you now have access to the following hotkeys throughout Windows:
 
-1. Download the AutoHotKey Installer from https://www.autohotkey.com/download/
-2. Run the installer, and be sure to install the Unicode (not ANSI) version
-3. Download the latest HawKeys ahk file from https://github.com/jonthysell/HawKeys/releases/latest
-4. Double-click HawKeys.ahk 
-
-You should now see AutoHotKey running the HawKeys script in your system tray.
-
-## Hot Key Usage ##
-
-With HawKeys running, you now have access to the following hot keys:
-
-| Hot Key         | Letter |
+| Hotkey         | Letter |
 |:----------------|:-------|
 | Alt + '         | ʻ      |
 | Alt + a         | ā      |
@@ -51,6 +40,45 @@ With HawKeys running, you now have access to the following hot keys:
 | Alt + Shift + o | Ō      |
 | Alt + u         | ū      |
 | Alt + Shift + u | Ū      |
+
+## Run HawKeys in the Background ##
+
+You can run HawKeys in the background, (ie. not have the window visible all the time) by minimizing it to your System Tray (the area on the Taskbar near the clock). Double-clicking on the HawKeys icon will re-open the window.
+
+You can also check the box labeled "Start minimized in the System Tray", so that HawKeys automatically starts minimized, so you don't need to be bothered to manually minimize it every time it launches.
+
+## Start HawKeys on System Startup ##
+
+You can configure HawKeys to start up automatically when you log into your computer.
+
+### Microsoft Store Version ###
+
+1. Make sure you've run HawKeys at least once
+2. Right-click on your Taskbar and select "Task Manager"
+3. If necessary, click on the "More details" arrow at the bottom left of the window
+4. Click on the "Startup" tab at the top of the window
+5. Select "HawKeys" in the list of applications
+6. Click the "Enable" button in the bottom right of the window
+
+### Regular Install Version ###
+
+1. Press the Win + R keys on your keyboard to open the "Run" dialog
+2. Type the following (without the quotes) into the textbox: "shell:startup"
+3. Click "OK"
+4. Place HawKeys.exe (or a shortcut to HawKeys.exe) into the "Startup" folder that should have opened
+
+Now HawKeys should run automatically whenever you log into your computer.
+
+## AutoHotKey Users ##
+
+If you're unwilling (or unable) to install HawKeys, and use the popular automation tool AutoHotKey, the base functionality of HawKeys is also provided as an AHK script.
+
+1. Download the AutoHotKey Installer from https://www.autohotkey.com/download/
+2. Run the installer, and be sure to install the Unicode (not ANSI) version
+3. Download the latest HawKeys AHK script from https://github.com/jonthysell/HawKeys/releases/latest
+4. Double-click HawKeys.ahk 
+
+You should now see AutoHotKey running the HawKeys script in your system tray.
 
 ## Errata ##
 
