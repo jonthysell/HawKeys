@@ -283,5 +283,21 @@ namespace HawKeys
                 HandleException(ex);
             }
         }
+
+        protected override void WndProc(ref Message message)
+        {
+            if (message.Msg == SingleInstance.WM_SHOWFIRSTINSTANCE)
+            {
+                if (WindowState == FormWindowState.Minimized)
+                {
+                    OnOpenWindow();
+                }
+                else
+                {
+                    Activate();
+                }
+            }
+            base.WndProc(ref message);
+        }
     }
 }

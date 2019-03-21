@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="HotKeyManager.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="SingleInstance.cs" />
     <EmbeddedResource Include="HawKeysForm.resx">
       <DependentUpon>HawKeysForm.cs</DependentUpon>
     </EmbeddedResource>
