@@ -1,4 +1,4 @@
-![HawKeys ScreenShot](https://jonthysell.files.wordpress.com/2019/03/hawkeysscreenshot.png)
+![HawKeys ScreenShot](./.github/hawkeysscreenshot.png)
 
 # HawKeys #
 
