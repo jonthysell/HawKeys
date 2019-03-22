@@ -39,30 +39,37 @@ namespace HawKeys
         {
             get
             {
-                Version version = Assembly.GetExecutingAssembly().GetName().Version;
-
-                string versionString = string.Format("{0}.{1}", version.Major, version.Minor);
-
-                if (version.Revision == 0 && version.Build > 0)
+                if (null == _programName)
                 {
-                    versionString += string.Format(".{0}", version.Build);
-                }
-                else if (version.Revision > 0)
-                {
-                    versionString += string.Format(".{0}.{1}", version.Build, version.Revision);
+                    Version version = Assembly.GetExecutingAssembly().GetName().Version;
+
+                    string versionString = string.Format("{0}.{1}", version.Major, version.Minor);
+
+                    if (version.Revision == 0 && version.Build > 0)
+                    {
+                        versionString += string.Format(".{0}", version.Build);
+                    }
+                    else if (version.Revision > 0)
+                    {
+                        versionString += string.Format(".{0}.{1}", version.Build, version.Revision);
+                    }
+
+                    _programName = string.Format("{0} v{1}", Assembly.GetExecutingAssembly().GetName().Name, versionString);
                 }
 
-                return string.Format("{0} v{1}", Assembly.GetExecutingAssembly().GetName().Name, versionString);
+                return _programName;
             }
         }
+        private string _programName = null;
 
         public string ProgramCopyright
         {
             get
             {
-                return ((AssemblyCopyrightAttribute)(Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true)[0])).Copyright;
+                return _programCopyright ?? (_programCopyright = ((AssemblyCopyrightAttribute)(Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), true)[0])).Copyright);
             }
         }
+        private string _programCopyright = null;
 
         public string CopyrightUrl => "https://github.com/jonthysell/HawKeys";
 
@@ -109,16 +116,9 @@ namespace HawKeys
         {
             InitializeComponent();
 
-            try
-            {
-                InitHotKeys();
-                InitLabels();
-                InitSettings();
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex);
-            }
+            InitHotKeys();
+            InitLabels();
+            InitSettings();
         }
 
         private void InitHotKeys()
@@ -158,12 +158,12 @@ namespace HawKeys
 
         private void HandleException(Exception ex)
         {
-            MessageBox.Show(ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(ex.Message, "HawKeys", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private bool PromptForConfirmation(string prompt)
         {
-            return MessageBox.Show(prompt, "HawKeys Prompt", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+            return MessageBox.Show(prompt, "HawKeys", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
         }
 
         private void OnMinimizeWindow()

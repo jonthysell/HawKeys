@@ -48,7 +48,7 @@ namespace HawKeys
 
             if (_keysMap.ContainsKey(hotKey))
             {
-                throw new Exception("That hotkey already exists.");
+                throw new Exception(string.Format("The hotkey {0}+{1} is already registered.", modifiers.ToString(), key.ToString()));
             }
 
             int id = ID_BASE + _idMap.Count;
@@ -60,7 +60,7 @@ namespace HawKeys
 
             if (!NativeMethods.RegisterHotKey(Handle, id, (int)hotKeyModifiers, (int)key))
             {
-                throw new Exception("Unable to register the hotkey.");
+                throw new Exception(string.Format("Unable to register the hotkey {0}+{1}. It's already in use.", modifiers.ToString(), key.ToString()));
             }
 
             HotKeyEntry hke = new HotKeyEntry()

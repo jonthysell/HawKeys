@@ -50,7 +50,7 @@ namespace HawKeys
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Join(Environment.NewLine,new string[] { "A fatal error has occured and HawKeys will now exit.", ex.Message }), "HawKeys", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
