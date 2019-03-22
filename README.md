@@ -1,4 +1,4 @@
-![HawKeys ScreenShot](./.github/hawkeysscreenshot.png)
+![HawKeys ScreenShot](./.github/screenshot.png)
 
 # HawKeys #
 
