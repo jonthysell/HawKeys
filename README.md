@@ -1,4 +1,4 @@
-![HawKeys ScreenShot](./.github/screenshot.png)
+![HawKeys Banner](./.github/banner.png)
 
 # HawKeys #
 
@@ -21,7 +21,9 @@ HawKeys is now available on the Microsoft Store.
 2. Extract the zip file
 3. Double-click HawKeys.exe
 
-You should now see the HawKeys window running.
+You should now see the HawKeys window running:
+
+![HawKeys ScreenShot](./.github/screenshot.png)
 
 ## Hotkey Usage ##
 
