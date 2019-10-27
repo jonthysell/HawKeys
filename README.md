@@ -4,7 +4,7 @@
 
 HawKeys is a small application to make it easy to insert the proper Unicode characters for the [ʻokina](http://www.olelo.hawaii.edu/olelo/puana/okina.php) and [kahakōs](http://www.olelo.hawaii.edu/olelo/puana/kahako.php) used in the Hawaiian language.
 
-HawKeys requires .NET 2.0 and shoud work on Windows XP SP3 and later.
+HawKeys requires .NET 2.0 and should work on Windows XP SP3 and later.
 
 ## Installation ##
 
