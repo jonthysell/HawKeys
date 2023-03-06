@@ -8,14 +8,16 @@ HawKeys requires .NET 2.0 and should work on Windows XP SP3 and later.
 
 ## Installation ##
 
-### From the Microsoft Store (Windows 10 Recommended) ###
+### Microsoft Store Version (Windows 10+) (Recommended) ###
 
-HawKeys is now available on the Microsoft Store.
+HawKeys is available on the Microsoft Store.
 
-1. Get the latest version from https://www.microsoft.com/en-us/p/hawkeys/9nh9633zwkbp
-2. Run HawKeys from your Start Menu
+1. Get the latest version from: https://www.microsoft.com/en-us/p/hawkeys/9nh9633zwkbp
+2. Run HawKeys from the Start Menu
 
-### Regular Installation (Windows XP SP3 / Vista / 7 / 8.1 / 10) ###
+### Portable Version (Windows XP SP3+) ###
+
+HawKeys is also available as small executable that should run on any Windows machine with .NET 2.0 installed.
 
 1. Download the latest HawKeysBinaries zip file from https://github.com/jonthysell/HawKeys/releases/latest
 2. Extract the zip file
@@ -45,7 +47,7 @@ With HawKeys running, you now have access to the following hotkeys throughout Wi
 
 ## Run HawKeys in the Background ##
 
-You can run HawKeys in the background, (ie. not have the window visible all the time) by minimizing it to your System Tray (the area on the Taskbar near the clock). Double-clicking on the HawKeys icon will re-open the window.
+You can run HawKeys in the background, (i.e. not have the window visible all the time) by minimizing it to your System Tray (the area on the Taskbar near the clock). Double-clicking on the HawKeys icon will re-open the window.
 
 You can also check the box labeled "Start minimized in the System Tray", so that you don't need to manually minimize HawKeys every time it launches.
 
@@ -61,7 +63,7 @@ You can configure HawKeys to start up automatically when you log into your compu
 4. Select "HawKeys" in the list of applications
 5. Click the "Enable" button in the bottom right of the window
 
-### Regular Install Version ###
+### Portable Version ###
 
 1. Press the Win + R keys on your keyboard to open the "Run" dialog
 2. Type the following (without the quotes) into the textbox: "shell:startup"
@@ -74,4 +76,4 @@ Now HawKeys should run automatically whenever you log into your computer.
 
 HawKeys is open-source under the MIT license.
 
-HawKeys Copyright (c) 2019 Jon Thysell
+HawKeys Copyright (c) 2019-2023 Jon Thysell

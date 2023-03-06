@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jon Thysell")]
 [assembly: AssemblyProduct("HawKeys")]
-[assembly: AssemblyCopyright("Copyright © Jon Thysell 2019")]
+[assembly: AssemblyCopyright("Copyright © Jon Thysell 2019-2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
