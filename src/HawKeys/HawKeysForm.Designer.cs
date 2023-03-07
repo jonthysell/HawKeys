@@ -52,23 +52,24 @@
             // 
             // notifyContextMenuStrip
             // 
+            this.notifyContextMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.notifyContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.notifyContextMenuStrip.Name = "notifyContextMenuStrip";
-            this.notifyContextMenuStrip.Size = new System.Drawing.Size(104, 48);
+            this.notifyContextMenuStrip.Size = new System.Drawing.Size(129, 68);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(128, 32);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(128, 32);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -82,13 +83,14 @@
             this.mainLayoutPanel.Controls.Add(this.startMinimizedCheckBox, 0, 2);
             this.mainLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.mainLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.mainLayoutPanel.Name = "mainLayoutPanel";
             this.mainLayoutPanel.RowCount = 4;
             this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.mainLayoutPanel.Size = new System.Drawing.Size(384, 211);
+            this.mainLayoutPanel.Size = new System.Drawing.Size(576, 325);
             this.mainLayoutPanel.TabIndex = 0;
             // 
             // helpLabel
@@ -96,10 +98,10 @@
             this.helpLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.helpLabel.AutoSize = true;
             this.helpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.helpLabel.Location = new System.Drawing.Point(67, 74);
-            this.helpLabel.Margin = new System.Windows.Forms.Padding(10);
+            this.helpLabel.Location = new System.Drawing.Point(99, 109);
+            this.helpLabel.Margin = new System.Windows.Forms.Padding(15);
             this.helpLabel.Name = "helpLabel";
-            this.helpLabel.Size = new System.Drawing.Size(250, 40);
+            this.helpLabel.Size = new System.Drawing.Size(378, 58);
             this.helpLabel.TabIndex = 1;
             this.helpLabel.Text = "Press Alt + \' to insert the ʻokina.\r\nPress Alt + vowel to add a kahakō.";
             this.helpLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -109,10 +111,10 @@
             this.topLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.topLabel.AutoSize = true;
             this.topLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.topLabel.Location = new System.Drawing.Point(147, 20);
-            this.topLabel.Margin = new System.Windows.Forms.Padding(20);
+            this.topLabel.Location = new System.Drawing.Point(221, 31);
+            this.topLabel.Margin = new System.Windows.Forms.Padding(30, 31, 30, 31);
             this.topLabel.Name = "topLabel";
-            this.topLabel.Size = new System.Drawing.Size(89, 24);
+            this.topLabel.Size = new System.Drawing.Size(133, 32);
             this.topLabel.TabIndex = 0;
             this.topLabel.Text = "HawKeys";
             this.topLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -122,10 +124,10 @@
             this.copyrightLinkLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.copyrightLinkLabel.AutoSize = true;
             this.copyrightLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.copyrightLinkLabel.Location = new System.Drawing.Point(113, 181);
-            this.copyrightLinkLabel.Margin = new System.Windows.Forms.Padding(10);
+            this.copyrightLinkLabel.Location = new System.Drawing.Point(177, 272);
+            this.copyrightLinkLabel.Margin = new System.Windows.Forms.Padding(15);
             this.copyrightLinkLabel.Name = "copyrightLinkLabel";
-            this.copyrightLinkLabel.Size = new System.Drawing.Size(158, 17);
+            this.copyrightLinkLabel.Size = new System.Drawing.Size(222, 25);
             this.copyrightLinkLabel.TabIndex = 2;
             this.copyrightLinkLabel.TabStop = true;
             this.copyrightLinkLabel.Text = "Copyright © Jon Thysell";
@@ -138,10 +140,10 @@
             this.startMinimizedCheckBox.AutoCheck = false;
             this.startMinimizedCheckBox.AutoSize = true;
             this.startMinimizedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startMinimizedCheckBox.Location = new System.Drawing.Point(56, 134);
-            this.startMinimizedCheckBox.Margin = new System.Windows.Forms.Padding(10);
+            this.startMinimizedCheckBox.Location = new System.Drawing.Point(84, 197);
+            this.startMinimizedCheckBox.Margin = new System.Windows.Forms.Padding(15);
             this.startMinimizedCheckBox.Name = "startMinimizedCheckBox";
-            this.startMinimizedCheckBox.Size = new System.Drawing.Size(271, 24);
+            this.startMinimizedCheckBox.Size = new System.Drawing.Size(407, 33);
             this.startMinimizedCheckBox.TabIndex = 3;
             this.startMinimizedCheckBox.Text = "Start minimized in the System Tray";
             this.startMinimizedCheckBox.UseVisualStyleBackColor = true;
@@ -149,15 +151,16 @@
             // 
             // HawKeysForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(384, 211);
+            this.ClientSize = new System.Drawing.Size(576, 325);
             this.Controls.Add(this.mainLayoutPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(400, 250);
+            this.MinimumSize = new System.Drawing.Size(589, 354);
             this.Name = "HawKeysForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HawKeys";

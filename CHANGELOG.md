@@ -1,5 +1,9 @@
 # HawKeys Change Log #
 
+## next ##
+
+* Added more icon resolutions for high DPI scenarios
+
 ## v1.3 ##
 
 * Fixed issue so only one instance of HawKeys can run at a time
