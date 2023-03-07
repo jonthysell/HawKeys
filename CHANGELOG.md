@@ -1,4 +1,4 @@
-# HawKeys Changelog #
+# HawKeys Change Log #
 
 ## v1.3 ##
 

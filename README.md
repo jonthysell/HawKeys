@@ -19,7 +19,7 @@ HawKeys is available on the Microsoft Store.
 
 HawKeys is also available as small executable that should run on any Windows machine with .NET 2.0 installed.
 
-1. Download the latest HawKeysBinaries zip file from https://github.com/jonthysell/HawKeys/releases/latest
+1. Download the latest HawKeys.Portable.zip file from https://github.com/jonthysell/HawKeys/releases/latest
 2. Extract the zip file
 3. Double-click HawKeys.exe
 
