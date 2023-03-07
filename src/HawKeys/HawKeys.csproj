@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework Condition="'$(TargetFramework)' == ''">net461</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <StartupObject>HawKeys.Program</StartupObject>
+    <AssemblyName>HawKeys</AssemblyName>
+    <RootNamespace>HawKeys</RootNamespace>
+    <ApplicationIcon>HawKeys.ico</ApplicationIcon>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Platforms>AnyCPU;x86;x64</Platforms>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="HawKeys.ico" />
+    <EmbeddedResource Include="HawKeys.ico" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net20'">
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+</Project>

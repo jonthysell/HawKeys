@@ -20,7 +20,7 @@
         </uap:DefaultTile>
       </uap:VisualElements>
       <Extensions>
-        <desktop:Extension Category="windows.startupTask" EntryPoint="Windows.FullTrustApplication" Executable="HawKeys.Net46\HawKeys.exe">
+        <desktop:Extension Category="windows.startupTask" EntryPoint="Windows.FullTrustApplication" Executable="HawKeys\HawKeys.exe">
           <desktop:StartupTask DisplayName="HawKeys" Enabled="false" TaskId="HawKeysStartupId" />
         </desktop:Extension>
       </Extensions>
