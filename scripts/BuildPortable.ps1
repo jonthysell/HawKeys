@@ -26,7 +26,7 @@ try
 
     Write-Host "Build..."
 
-    msbuild -restore -p:Configuration=$Configuration -p:TargetFramework=net20 "$ProjectPath"
+    msbuild -restore -p:Configuration=$Configuration -p:BuildPortable=true "$ProjectPath"
     if (!$?) {
         throw 'Build failed!'
     }

@@ -3,6 +3,7 @@
 ## next ##
 
 * Added more icon resolutions for high DPI scenarios
+* Updated Store version to use .NET 4.6.2
 
 ## v1.3 ##
 

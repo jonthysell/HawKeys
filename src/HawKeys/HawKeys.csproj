@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework Condition="'$(TargetFramework)' == ''">net461</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>HawKeys.Program</StartupObject>
     <AssemblyName>HawKeys</AssemblyName>
@@ -14,7 +14,11 @@
     <None Remove="HawKeys.ico" />
     <EmbeddedResource Include="HawKeys.ico" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net20'">
+  <!-- Set BuildPortable=true to build targetting .NET 2.0. -->
+  <PropertyGroup Condition="'$(BuildPortable)' == 'true'">
+    <TargetFramework>net20</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(BuildPortable)' == 'true'">
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 </Project>
