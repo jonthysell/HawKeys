@@ -1,6 +1,6 @@
 # HawKeys Change Log #
 
-## next ##
+## v1.4.0 ##
 
 * Added more icon resolutions for high DPI scenarios
 * Changed dialog font to Lucida Sans Unicode so it renders properly on Windows XP
