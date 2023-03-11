@@ -97,11 +97,11 @@
             // 
             this.helpLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.helpLabel.AutoSize = true;
-            this.helpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.helpLabel.Location = new System.Drawing.Point(99, 109);
+            this.helpLabel.Font = new System.Drawing.Font("Lucida Sans Unicode", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.helpLabel.Location = new System.Drawing.Point(79, 111);
             this.helpLabel.Margin = new System.Windows.Forms.Padding(15);
             this.helpLabel.Name = "helpLabel";
-            this.helpLabel.Size = new System.Drawing.Size(378, 58);
+            this.helpLabel.Size = new System.Drawing.Size(418, 56);
             this.helpLabel.TabIndex = 1;
             this.helpLabel.Text = "Press Alt + \' to insert the ʻokina.\r\nPress Alt + vowel to add a kahakō.";
             this.helpLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -110,11 +110,11 @@
             // 
             this.topLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.topLabel.AutoSize = true;
-            this.topLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.topLabel.Location = new System.Drawing.Point(221, 31);
+            this.topLabel.Font = new System.Drawing.Font("Lucida Sans Unicode", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.topLabel.Location = new System.Drawing.Point(216, 31);
             this.topLabel.Margin = new System.Windows.Forms.Padding(30, 31, 30, 31);
             this.topLabel.Name = "topLabel";
-            this.topLabel.Size = new System.Drawing.Size(133, 32);
+            this.topLabel.Size = new System.Drawing.Size(143, 34);
             this.topLabel.TabIndex = 0;
             this.topLabel.Text = "HawKeys";
             this.topLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -123,11 +123,11 @@
             // 
             this.copyrightLinkLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.copyrightLinkLabel.AutoSize = true;
-            this.copyrightLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.copyrightLinkLabel.Location = new System.Drawing.Point(177, 272);
+            this.copyrightLinkLabel.Font = new System.Drawing.Font("Lucida Sans Unicode", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.copyrightLinkLabel.Location = new System.Drawing.Point(169, 273);
             this.copyrightLinkLabel.Margin = new System.Windows.Forms.Padding(15);
             this.copyrightLinkLabel.Name = "copyrightLinkLabel";
-            this.copyrightLinkLabel.Size = new System.Drawing.Size(222, 25);
+            this.copyrightLinkLabel.Size = new System.Drawing.Size(237, 23);
             this.copyrightLinkLabel.TabIndex = 2;
             this.copyrightLinkLabel.TabStop = true;
             this.copyrightLinkLabel.Text = "Copyright © Jon Thysell";
@@ -139,11 +139,11 @@
             this.startMinimizedCheckBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.startMinimizedCheckBox.AutoCheck = false;
             this.startMinimizedCheckBox.AutoSize = true;
-            this.startMinimizedCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.startMinimizedCheckBox.Location = new System.Drawing.Point(84, 197);
+            this.startMinimizedCheckBox.Font = new System.Drawing.Font("Lucida Sans Unicode", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.startMinimizedCheckBox.Location = new System.Drawing.Point(65, 197);
             this.startMinimizedCheckBox.Margin = new System.Windows.Forms.Padding(15);
             this.startMinimizedCheckBox.Name = "startMinimizedCheckBox";
-            this.startMinimizedCheckBox.Size = new System.Drawing.Size(407, 33);
+            this.startMinimizedCheckBox.Size = new System.Drawing.Size(446, 32);
             this.startMinimizedCheckBox.TabIndex = 3;
             this.startMinimizedCheckBox.Text = "Start minimized in the System Tray";
             this.startMinimizedCheckBox.UseVisualStyleBackColor = true;

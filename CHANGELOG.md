@@ -3,6 +3,7 @@
 ## next ##
 
 * Added more icon resolutions for high DPI scenarios
+* Changed dialog font to Lucida Sans Unicode so it renders properly on Windows XP
 * Updated Store version to use .NET 4.6.2
 
 ## v1.3 ##
