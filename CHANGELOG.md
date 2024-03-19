@@ -1,6 +1,6 @@
 # HawKeys Change Log #
 
-## next ##
+## v1.4.1 ##
 
 * Minor code cleanup
 

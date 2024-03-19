@@ -6,7 +6,7 @@
     <Copyright>Copyright © 2019-2024 Jon Thysell</Copyright>
     <AssemblyDescription>Easily insert unicode ʻokina and kahakō characters used in Hawaiian.</AssemblyDescription>
     <RepositoryUrl>https://github.com/jonthysell/HawHeys</RepositoryUrl>
-    <Version>1.4.0</Version>
+    <Version>1.4.1</Version>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <DebugType>embedded</DebugType>
