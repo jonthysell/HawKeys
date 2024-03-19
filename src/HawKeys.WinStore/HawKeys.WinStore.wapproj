@@ -40,6 +40,7 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <MSBuildWarningsAsMessages>NU1702</MSBuildWarningsAsMessages>
+    <PackageCertificateThumbprint>FBD0EEEF1729DD78DBBBD09302C2EF929061DBA5</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <AppxBundle>Always</AppxBundle>

@@ -1,5 +1,9 @@
 # HawKeys Change Log #
 
+## next ##
+
+* Minor code cleanup
+
 ## v1.4.0 ##
 
 * Added more icon resolutions for high DPI scenarios

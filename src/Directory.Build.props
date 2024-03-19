@@ -3,7 +3,7 @@
     <Product>HawKeys</Product>
     <Company>Jon Thysell</Company>
     <Authors>Jon Thysell</Authors>
-    <Copyright>Copyright © 2019-2023 Jon Thysell</Copyright>
+    <Copyright>Copyright © 2019-2024 Jon Thysell</Copyright>
     <AssemblyDescription>Easily insert unicode ʻokina and kahakō characters used in Hawaiian.</AssemblyDescription>
     <RepositoryUrl>https://github.com/jonthysell/HawHeys</RepositoryUrl>
     <Version>1.4.0</Version>

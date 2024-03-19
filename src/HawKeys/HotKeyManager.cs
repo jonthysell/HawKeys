@@ -11,8 +11,8 @@ namespace HawKeys
     // Adapted from https://social.msdn.microsoft.com/Forums/vstudio/en-US/c061954b-19bf-463b-a57d-b09c98a3fe7d/assign-global-hotkey-to-a-system-tray-application-in-c
     public sealed class HotKeyManager : NativeWindow, IDisposable
     {
-        private Dictionary<Keys, HotKeyEntry> _keysMap = new Dictionary<Keys, HotKeyEntry>();
-        private Dictionary<int, HotKeyEntry> _idMap = new Dictionary<int, HotKeyEntry>();
+        private readonly Dictionary<Keys, HotKeyEntry> _keysMap = new Dictionary<Keys, HotKeyEntry>();
+        private readonly Dictionary<int, HotKeyEntry> _idMap = new Dictionary<int, HotKeyEntry>();
 
         public HotKeyManager()
         {

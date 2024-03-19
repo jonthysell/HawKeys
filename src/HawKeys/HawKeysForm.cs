@@ -82,10 +82,14 @@ namespace HawKeys
         {
             get
             {
-                return (_settings = Registry.CurrentUser.OpenSubKey("Software", true).CreateSubKey("JonThysell").CreateSubKey("HawKeys"));
+                if (_settings is null)
+                {
+                    _settings = Registry.CurrentUser.OpenSubKey("Software", true).CreateSubKey("JonThysell").CreateSubKey("HawKeys");
+                }
+                return _settings;
             }
         }
-        private RegistryKey _settings;
+        private RegistryKey _settings = null;
 
         public HotKeyManager HotKeyManager { get; private set; }
 

@@ -76,4 +76,4 @@ Now HawKeys should run automatically whenever you log into your computer.
 
 HawKeys is open-source under the MIT license.
 
-HawKeys Copyright (c) 2019-2023 Jon Thysell
+HawKeys Copyright (c) 2019-2024 Jon Thysell
